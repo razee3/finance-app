@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+  <header id="main-header">
+    <nav class="nav-bar">
+        {% if user.is_authenticated %}
+            <a class="nav-link" href="/dashboard/">My Dashboard</a>
+            <a class="nav-link" href="/profile/">My Profile</a>
+            <a class="nav-link" href="/transactions/">My Transactions</a>
+            <a class="nav-link" href="/logout/">Logout</a>
+        {% else %}
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/login/">Login</a>
+            <a class="nav-link" href="/register/">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main id="main-content">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer id="main-footer">
+    <p>&copy; 2024 My Django App</p>
+</footer>
+</body>
+</html>

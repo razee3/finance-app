@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<h2>User Profile</h2>
+
+<p><strong>Name:</strong> {{ user.get_full_name }}</p>
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>ID:</strong> {{ user.id }}</p>
+<a href="{% url 'delete' %}">Delete Profile</a>
+
+<h3>Update Your Categories</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Categories</button>
+</form>
+
+<h4>Current Categories</h4>
+<p><strong>Income Categories:</strong> {{ profile.income_categories }}</p>
+<p><strong>Expense Categories:</strong> {{ profile.expense_categories }}</p>
+{% endblock %}

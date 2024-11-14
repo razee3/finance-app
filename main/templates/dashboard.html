@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block title %}
+User Dashboard
+{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ request.user.username }}!</h2>
+<p>You are now logged in.</p>
+
+<form method="get" action="{% url 'dashboard' %}">
+  <label for="start_date">Start Date:</label>
+  <input type="date" name="start_date" value="{{ start_date }}" id="start_date">
+  
+  <label for="end_date">End Date:</label>
+  <input type="date" name="end_date" value="{{ end_date }}" id="end_date">
+  
+  <button type="submit">Filter</button>
+</form>
+
+<div class="summary-cards">
+  <div class="card">
+      <h3>Total Income</h3>
+      <p>${{ total_income|floatformat:2 }}</p>
+  </div>
+  <div class="card">
+      <h3>Total Expenses</h3>
+      <p>${{ total_expenses|floatformat:2 }}</p>
+  </div>
+  <div class="card">
+      <h3>Total Number of Transactions</h3>
+      <p>{{ total_transactions }}</p>
+  </div>
+  <div class="card">
+      <h3>Balance</h3>
+      <p>${{ balance|floatformat:2 }}</p>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Total ($)</th>
+      <th>Percentage (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in income_category_totals %}
+    <tr>
+      <td>{{ category.category }}</td>
+      <td>${{ category.total |floatformat:2 }}</td>
+      <td>{{ category.percentage|floatformat:2 }}%</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="3">No income data available.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="chart-container">
+  <canvas id="incomeChart" width="400" height="400" data-empty="{{ income_data_empty }}"></canvas>
+  <span class="chart-placeholder">No data available</span>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Total ($)</th>
+      <th>Percentage (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in expense_category_totals %}
+    <tr>
+      <td>{{ category.category }}</td>
+      <td>${{ category.total |floatformat:2 }}</td>
+      <td>{{ category.percentage|floatformat:2 }}%</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="3">No income data available.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="chart-container">
+  <canvas id="expenseChart" width="400" height="400" data-empty="{{ expense_data_empty }}"></canvas>
+  <span class="chart-placeholder">No data available</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Income Doughnut Chart Data
+  const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+  const incomeData = {
+    labels: [
+      {% for category in income_category_totals %}
+      '{{ category.category }}',
+      {% endfor %}
+    ],
+    datasets: [{
+      label: 'Income Distribution',
+      data: [
+        {% for category in income_category_totals %}
+        {{ category.total|floatformat:2 }},
+        {% endfor %}
+      ],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1
+    }]
+  };
+  const incomeChart = new Chart(incomeCtx, {
+    type: 'doughnut',
+    data: incomeData,
+  });
+
+  // Expense Doughnut Chart Data
+  const expenseCtx = document.getElementById('expenseChart').getContext('2d');
+  const expenseData = {
+    labels: [
+      {% for category in expense_category_totals %}
+      '{{ category.category }}',
+      {% endfor %}
+    ],
+    datasets: [{
+      label: 'Expense Distribution',
+      data: [
+        {% for category in expense_category_totals %}
+        {{ category.total|floatformat:2 }},
+        {% endfor %}
+      ],
+      backgroundColor: [
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)'
+      ],
+      borderColor: [
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)'
+      ],
+      borderWidth: 1
+    }]
+  };
+  const expenseChart = new Chart(expenseCtx, {
+    type: 'doughnut',
+    data: expenseData,
+  });
+</script>
+
+{% endblock %}

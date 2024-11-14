@@ -1,0 +1,128 @@
+/* Headings */
+h2, h3, h4 {
+  color: #007BFF; /* Primary blue color for headings */
+  margin-bottom: 15px;
+}
+h2 {
+  font-size: 1.8rem;
+}
+h3 {
+  font-size: 1.5rem;
+}
+h4 {
+  font-size: 1.2rem;
+}
+
+/* Paragraph Styling */
+p {
+  margin-bottom: 10px;
+}
+p strong {
+  color: #0056b3; /* Slightly darker blue for labels */
+}
+
+/* Links */
+a {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+a:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+/* Button Styling */
+button, .btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover, .btn:hover {
+  background-color: #218838;
+}
+button[type="submit"] {
+  margin-top: 10px;
+}
+
+/* Form Styling */
+form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+}
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: 500;
+}
+form input[type="text"],
+form input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+form input::placeholder {
+  color: #aaa;
+}
+form button {
+  width: 100%; /* Full-width button for forms */
+}
+
+/* Alert Messages */
+.alert {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+.alert-error,
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+.alert-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Profile Section */
+strong {
+  font-weight: 600;
+}
+
+/* Layout for Categories */
+.profile-section {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.profile-section h3 {
+  margin-top: 20px;
+}
+.profile-section p {
+  margin-bottom: 10px;
+}

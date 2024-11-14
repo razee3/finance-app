@@ -1,0 +1,70 @@
+<h3>Edit Transaction</h3>
+<form id="editTransactionForm" method="post">
+  {% csrf_token %}
+  <label for="edit-date">Date:</label>
+  <input type="date" name="date" id="edit-date" required><br><br>
+
+  <label for="edit-amount">Amount:</label>
+  <input type="number" step="0.01" name="amount" id="edit-amount" placeholder="Amount" required><br><br>
+
+  <label for="edit-name">Name:</label>
+  <input type="text" name="name" id="edit-name"
+  placeholder="Transaction Name" required><br><br>
+
+  <label for="edit-transaction-type">Transaction Type:</label>
+  <select name="transaction_type" id="edit-transaction-type" required>
+      <option value="">Select Type</option>
+      <option value="income">Income</option>
+      <option value="expense">Expense</option>
+  </select><br><br>
+
+  <label for="category">Category:</label>
+    <select name="category" id="edit-category" required>
+        <option value="">Select Category</option>
+    </select><br><br>
+
+  <button type="submit">Save Changes</button>
+  <button type="button" id="closeEditModalBtn">Close</button>
+</form>
+
+<script>
+  // Define the update function in the global scope
+  window.updateEditCategories = async function(transactionType, selectedCategory = '') {
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      const categorySelect = document.getElementById('edit-category');
+      
+      if (transactionType) {
+          try {
+            const response = await fetch(`/get-category-options?type=${transactionType}`, {
+              headers: {
+                  'X-CSRFToken': csrfToken
+              }
+          });
+          const data = await response.json();
+          categorySelect.innerHTML = '<option value="">Select Category</option>';
+          data.categories.forEach(category => {
+              const option = document.createElement('option');
+              option.value = category;
+              option.textContent = category;
+              categorySelect.appendChild(option);
+          });
+          if (selectedCategory) {
+            categorySelect.value = selectedCategory;
+        }
+          } catch (error) {
+              console.error('Error fetching categories:', error);
+          }
+      } else {
+          categorySelect.innerHTML = '<option value="">Select Category</option>';
+      }
+  };
+  
+  document.addEventListener('DOMContentLoaded', function() {
+      const transactionTypeSelect = document.getElementById('edit-transaction-type');
+      
+      // Listen for transaction type changes
+      transactionTypeSelect.addEventListener('change', function() {
+          window.updateEditCategories(this.value);
+      });
+  });
+  </script>

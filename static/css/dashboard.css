@@ -1,0 +1,173 @@
+/* Headings */
+h2 {
+  font-size: 1.8rem;
+  color: #007BFF;
+  margin-bottom: 20px;
+  text-align: center;
+}
+h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Paragraph */
+p {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+form label {
+  font-weight: 500;
+}
+form input[type="date"] {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+form button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+form button:hover {
+  background-color: #218838;
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px auto;
+  flex-wrap: wrap;
+  max-width: 1000px;
+}
+.card {
+  flex: 1 1 200px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.card h3 {
+  font-size: 1.3rem;
+  color: #007BFF;
+}
+.card p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Table Styling */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+table thead {
+  background-color: #007BFF;
+  color: white;
+}
+table thead th {
+  padding: 10px;
+  font-size: 1rem;
+  text-align: left;
+}
+table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+table tbody td {
+  padding: 10px;
+  font-size: 0.95rem;
+  text-align: left;
+}
+table tbody tr:hover {
+  background-color: #e9ecef;
+}
+table tbody td[colspan="3"] {
+  text-align: center;
+  font-style: italic;
+}
+
+/* Charts */
+canvas {
+  display: block;
+  margin: 20px auto;
+  max-width: 250px;
+  max-height: 250px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Chart Container */
+.chart-container {
+  position: relative; /* For inner content alignment */
+  width: 250px;
+  height: 250px;
+  margin: 20px auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Placeholder Message */
+.chart-placeholder {
+  font-size: 1rem;
+  color: #aaa;
+  font-style: italic;
+  position: absolute; /* Stays centered in the container */
+  z-index: 1; /* Above the canvas */
+}
+
+/* Hide Placeholder When Chart Is Visible */
+canvas:not([data-empty="true"]) + .chart-placeholder {
+  display: none; /* Hide the placeholder when data exists */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .summary-cards {
+      flex-direction: column;
+      align-items: center;
+  }
+  form {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  table {
+      width: 100%;
+  }
+}

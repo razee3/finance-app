@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Welcome to My Finance Tracker!</h1>
+    <p>Manage your income and expenses effortlessly and take control of your finances.</p>
+    <a href="/register/" class="cta-button">Get Started</a>
+</section>
+
+<section class="features">
+    <h2>Why Choose Us?</h2>
+    <div class="features-container">
+        <div class="feature">
+            <h3>Easy to Use</h3>
+            <p>Our intuitive interface makes it simple to track your income and expenses.</p>
+        </div>
+        <div class="feature">
+            <h3>Secure Data</h3>
+            <p>Your data is protected with industry-standard encryption.</p>
+        </div>
+        <div class="feature">
+            <h3>Detailed Reports</h3>
+            <p>Get comprehensive insights into your financial habits.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Join Thousands of Happy Users!</h2>
+    <p>Sign up today and start managing your finances smarter.</p>
+    <a href="/register/" class="cta-button">Sign Up Now</a>
+</section>
+{% endblock %}

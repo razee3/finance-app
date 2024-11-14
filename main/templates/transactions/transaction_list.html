@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+{% endblock %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block content %}
+<h2>My Latest Transactions</h2>
+
+<!-- Button to open the "Add New Transaction" modal -->
+<button id="openAddModalBtn">
+    Add New Transaction
+</button>
+
+{% if page_obj.object_list %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in page_obj.object_list %}
+            <tr>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.name }}</td>
+                <td>{{ transaction.transaction_type | capfirst }}</td>
+                <td>{{ transaction.category }}</td>
+                <td>
+                    <!-- Simplified Edit button -->
+                    <button class="openEditModalBtn"
+            data-id="{{ transaction.pk }}"
+            data-date="{{ transaction.date|date:"Y-m-d" }}"
+            data-amount="{{ transaction.amount }}"
+            data-name="{{ transaction.name }}"
+            data-category="{{ transaction.category }}"
+            data-transaction-type="{{ transaction.transaction_type }}">
+        Edit
+    </button>
+                    <form action="{% url 'delete_transaction' transaction.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="pagination">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
+{% else %}
+    <p>No transactions available. Start by adding a new transaction!</p>
+{% endif %}
+
+<div id="modalOverlay"></div>
+
+<!-- Add Transaction Modal -->
+<div id="addFormModal" class="modal">
+    {% include 'transactions/add_transaction_form.html' %}
+</div>
+
+<!-- Edit Transaction Modal -->
+<div id="editFormModal" class="modal">
+    {% include 'transactions/edit_transaction_form.html' %}
+</div>
+
+<script>
+  const overlay = document.getElementById('modalOverlay');
+
+  // Open and close "Add" modal
+  document.getElementById('openAddModalBtn').onclick = function() {
+    overlay.style.display = 'block';
+    document.getElementById('addFormModal').style.display = 'block';
+  };
+
+  document.getElementById('closeAddModalBtn').onclick = function() {
+    overlay.style.display = 'none';
+    document.getElementById('addFormModal').style.display = 'none';
+  };
+
+    // Open and close "Edit" modal
+  document.querySelectorAll('.openEditModalBtn').forEach(button => {
+    button.onclick = async function() {
+      overlay.style.display = 'block';
+      const transactionId = this.getAttribute('data-id');
+      const transactionType = this.getAttribute('data-transaction-type');
+      const currentCategory = this.getAttribute('data-category');
+  
+          // Set form action and other values
+      document.getElementById('editTransactionForm').action = `/transactions/edit/${transactionId}/`;
+      document.getElementById('edit-date').value = this.getAttribute('data-date');
+      document.getElementById('edit-amount').value = this.getAttribute('data-amount');
+      document.getElementById('edit-name').value = this.getAttribute('data-name');
+      document.getElementById('edit-transaction-type').value = transactionType;
+
+      // Fetch and populate the category options with the current value selected
+      await window.updateEditCategories(transactionType, currentCategory);
+
+      document.getElementById('editFormModal').style.display = 'block';
+    };
+  });
+
+  document.getElementById('closeEditModalBtn').onclick = function() {
+    overlay.style.display = 'none';
+    document.getElementById('editFormModal').style.display = 'none';
+  };
+</script>
+
+{% endblock %}

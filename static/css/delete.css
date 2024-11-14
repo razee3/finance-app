@@ -1,0 +1,54 @@
+body {
+  text-align: center;
+}
+
+/* Headings */
+h2 {
+  font-size: 1.8rem;
+  color: #dc3545; /* Use red to indicate a critical action */
+  margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+  display: inline-block; /* Keep the form inline for proper layout */
+  text-align: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Buttons */
+form button[type="submit"] {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+form button[type="submit"]:hover {
+  background-color: #c82333;
+}
+
+form a {
+  display: inline-block;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+form a:hover {
+  background-color: #0056b3;
+}
